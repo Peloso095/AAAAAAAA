@@ -1,0 +1,42 @@
+-- Create access_keys table
+CREATE TABLE public.access_keys (
+  id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+  access_key TEXT NOT NULL UNIQUE,
+  email TEXT,
+  used_at TIMESTAMP WITH TIME ZONE,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  is_active BOOLEAN NOT NULL DEFAULT true
+);
+
+-- Enable RLS
+ALTER TABLE public.access_keys ENABLE ROW LEVEL SECURITY;
+
+-- Only allow service role to manage keys (admin only)
+CREATE POLICY "Service role can manage keys"
+ON public.access_keys
+FOR ALL
+USING (true)
+WITH CHECK (true);
+
+-- Insert 20 access keys
+INSERT INTO public.access_keys (access_key) VALUES
+  ('MEDTRACK-2024-ALPHA-7K9X'),
+  ('MEDTRACK-2024-BETA-3M2N'),
+  ('MEDTRACK-2024-GAMMA-8P4Q'),
+  ('MEDTRACK-2024-DELTA-5R1S'),
+  ('MEDTRACK-2024-EPSILON-2T6U'),
+  ('MEDTRACK-2024-ZETA-9V3W'),
+  ('MEDTRACK-2024-ETA-4X8Y'),
+  ('MEDTRACK-2024-THETA-1Z5A'),
+  ('MEDTRACK-2024-IOTA-6B2C'),
+  ('MEDTRACK-2024-KAPPA-3D7E'),
+  ('MEDTRACK-2024-LAMBDA-8F4G'),
+  ('MEDTRACK-2024-MU-5H1I'),
+  ('MEDTRACK-2024-NU-2J6K'),
+  ('MEDTRACK-2024-XI-9L3M'),
+  ('MEDTRACK-2024-OMICRON-4N8O'),
+  ('MEDTRACK-2024-PI-1P5Q'),
+  ('MEDTRACK-2024-RHO-6R2S'),
+  ('MEDTRACK-2024-SIGMA-3T7U'),
+  ('MEDTRACK-2024-TAU-8V4W'),
+  ('MEDTRACK-2024-UPSILON-5X1Y');
